@@ -1,0 +1,150 @@
+Type,Diameter,Edges,Count
+"Connected",1,28,1
+"Connected",2,7,8
+"Connected",2,8,168
+"Connected",2,9,1680
+"Connected",2,10,10640
+"Connected",2,11,62160
+"Connected",2,12,489580
+"Connected",2,13,2771384
+"Connected",2,14,8454120
+"Connected",2,15,15423856
+"Connected",2,16,18924003
+"Connected",2,17,17004204
+"Connected",2,18,11856390
+"Connected",2,19,6657980
+"Connected",2,20,3077697
+"Connected",2,21,1182296
+"Connected",2,22,376740
+"Connected",2,23,98280
+"Connected",2,24,20475
+"Connected",2,25,3276
+"Connected",2,26,378
+"Connected",2,27,28
+"Connected",3,7,1736
+"Connected",3,8,62160
+"Connected",3,9,717640
+"Connected",3,10,4072600
+"Connected",3,11,12150096
+"Connected",3,12,23142812
+"Connected",3,13,30989280
+"Connected",3,14,30111480
+"Connected",3,15,21472080
+"Connected",3,16,11325692
+"Connected",3,17,4422096
+"Connected",3,18,1256080
+"Connected",3,19,247240
+"Connected",3,20,30240
+"Connected",3,21,1736
+"Connected",4,7,47040
+"Connected",4,8,628320
+"Connected",4,9,2752680
+"Connected",4,10,5480160
+"Connected",4,11,6173160
+"Connected",4,12,4383120
+"Connected",4,13,2043720
+"Connected",4,14,618240
+"Connected",4,15,111720
+"Connected",4,16,9240
+"Connected",5,7,112560
+"Connected",5,8,594720
+"Connected",5,9,960960
+"Connected",5,10,666960
+"Connected",5,11,216720
+"Connected",5,12,28560
+"Connected",6,7,80640
+"Connected",6,8,151200
+"Connected",6,9,50400
+"Connected",7,7,20160
+"No AP/B & connected",1,28,1
+"No AP/B & connected",2,11,14280
+"No AP/B & connected",2,12,326788
+"No AP/B & connected",2,13,2471728
+"No AP/B & connected",2,14,8070240
+"No AP/B & connected",2,15,15048376
+"No AP/B & connected",2,16,18637563
+"No AP/B & connected",2,17,16834524
+"No AP/B & connected",2,18,11779782
+"No AP/B & connected",2,19,6632500
+"No AP/B & connected",2,20,3071817
+"No AP/B & connected",2,21,1181456
+"No AP/B & connected",2,22,376684
+"No AP/B & connected",2,23,98280
+"No AP/B & connected",2,24,20475
+"No AP/B & connected",2,25,3276
+"No AP/B & connected",2,26,378
+"No AP/B & connected",2,27,28
+"No AP/B & connected",3,9,33600
+"No AP/B & connected",3,10,644280
+"No AP/B & connected",3,11,3623760
+"No AP/B & connected",3,12,10327380
+"No AP/B & connected",3,13,17727360
+"No AP/B & connected",3,14,19934880
+"No AP/B & connected",3,15,15475880
+"No AP/B & connected",3,16,8580180
+"No AP/B & connected",3,17,3450720
+"No AP/B & connected",3,18,997360
+"No AP/B & connected",3,19,198240
+"No AP/B & connected",3,20,24360
+"No AP/B & connected",3,21,1400
+"No AP/B & connected",4,8,2520
+"No AP/B & connected",4,9,50400
+"No AP/B & connected",4,10,191520
+"No AP/B & connected",4,11,302400
+"No AP/B & connected",4,12,254520
+"No AP/B & connected",4,13,118440
+"No AP/B & connected",4,14,27720
+"No AP/B & connected",4,15,2520
+"Degree <= 4 & connected",2,11,10080
+"Degree <= 4 & connected",2,12,134400
+"Degree <= 4 & connected",2,13,663600
+"Degree <= 4 & connected",2,14,1035720
+"Degree <= 4 & connected",2,15,431760
+"Degree <= 4 & connected",2,16,19355
+"Degree <= 4 & connected",3,7,560
+"Degree <= 4 & connected",3,8,33600
+"Degree <= 4 & connected",3,9,435120
+"Degree <= 4 & connected",3,10,2483320
+"Degree <= 4 & connected",3,11,6318480
+"Degree <= 4 & connected",3,12,8561700
+"Degree <= 4 & connected",3,13,6114360
+"Degree <= 4 & connected",3,14,1785420
+"Degree <= 4 & connected",3,15,86240
+"Degree <= 4 & connected",4,7,42000
+"Degree <= 4 & connected",4,8,567840
+"Degree <= 4 & connected",4,9,2426760
+"Degree <= 4 & connected",4,10,4452840
+"Degree <= 4 & connected",4,11,4160520
+"Degree <= 4 & connected",4,12,1949640
+"Degree <= 4 & connected",4,13,339360
+"Degree <= 4 & connected",4,14,2520
+"Degree <= 4 & connected",5,7,112560
+"Degree <= 4 & connected",5,8,594720
+"Degree <= 4 & connected",5,9,960960
+"Degree <= 4 & connected",5,10,666960
+"Degree <= 4 & connected",5,11,216720
+"Degree <= 4 & connected",5,12,28560
+"Degree <= 4 & connected",6,7,80640
+"Degree <= 4 & connected",6,8,151200
+"Degree <= 4 & connected",6,9,50400
+"Degree <= 4 & connected",7,7,20160
+"All Conditions",2,11,10080
+"All Conditions",2,12,134400
+"All Conditions",2,13,663600
+"All Conditions",2,14,1035720
+"All Conditions",2,15,431760
+"All Conditions",2,16,19355
+"All Conditions",3,9,33600
+"All Conditions",3,10,644280
+"All Conditions",3,11,2921520
+"All Conditions",3,12,5544420
+"All Conditions",3,13,4845960
+"All Conditions",3,14,1614060
+"All Conditions",3,15,86240
+"All Conditions",4,8,2520
+"All Conditions",4,9,50400
+"All Conditions",4,10,191520
+"All Conditions",4,11,282240
+"All Conditions",4,12,194040
+"All Conditions",4,13,55440
+"All Conditions",4,14,2520

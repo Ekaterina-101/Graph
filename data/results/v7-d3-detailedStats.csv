@@ -1,0 +1,79 @@
+Type,Diameter,Edges,Count
+"Connected",1,21,1
+"Connected",2,6,7
+"Connected",2,7,105
+"Connected",2,8,735
+"Connected",2,9,5075
+"Connected",2,10,35406
+"Connected",2,11,109410
+"Connected",2,12,171255
+"Connected",2,13,164115
+"Connected",2,14,108825
+"Connected",2,15,53627
+"Connected",2,16,20349
+"Connected",2,17,5985
+"Connected",2,18,1330
+"Connected",2,19,210
+"Connected",2,20,21
+"Connected",3,6,630
+"Connected",3,7,12750
+"Connected",3,8,77700
+"Connected",3,9,199290
+"Connected",3,10,277830
+"Connected",3,11,231210
+"Connected",3,12,119490
+"Connected",3,13,38640
+"Connected",3,14,7350
+"Connected",3,15,630
+"Connected",4,6,6090
+"Connected",4,7,40320
+"Connected",4,8,73080
+"Connected",4,9,53760
+"Connected",4,10,18270
+"Connected",4,11,2520
+"Connected",5,6,7560
+"Connected",5,7,15120
+"Connected",5,8,5040
+"Connected",6,6,2520
+"No AP/B & connected",1,21,1
+"No AP/B & connected",2,9,1890
+"No AP/B & connected",2,10,25851
+"No AP/B & connected",2,11,97461
+"No AP/B & connected",2,12,161840
+"No AP/B & connected",2,13,158970
+"No AP/B & connected",2,14,106935
+"No AP/B & connected",2,15,53207
+"No AP/B & connected",2,16,20307
+"No AP/B & connected",2,17,5985
+"No AP/B & connected",2,18,1330
+"No AP/B & connected",2,19,210
+"No AP/B & connected",2,20,21
+"No AP/B & connected",3,7,360
+"No AP/B & connected",3,8,7560
+"No AP/B & connected",3,9,44940
+"No AP/B & connected",3,10,107730
+"No AP/B & connected",3,11,119490
+"No AP/B & connected",3,12,70980
+"No AP/B & connected",3,13,24570
+"No AP/B & connected",3,14,4830
+"No AP/B & connected",3,15,420
+"Degree <= 3 & connected",2,9,840
+"Degree <= 3 & connected",2,10,1890
+"Degree <= 3 & connected",3,7,2880
+"Degree <= 3 & connected",3,8,20160
+"Degree <= 3 & connected",3,9,24780
+"Degree <= 3 & connected",3,10,3780
+"Degree <= 3 & connected",4,6,3990
+"Degree <= 3 & connected",4,7,25200
+"Degree <= 3 & connected",4,8,30870
+"Degree <= 3 & connected",4,9,6300
+"Degree <= 3 & connected",5,6,7560
+"Degree <= 3 & connected",5,7,15120
+"Degree <= 3 & connected",5,8,5040
+"Degree <= 3 & connected",6,6,2520
+"All Conditions",2,9,840
+"All Conditions",2,10,1890
+"All Conditions",3,7,360
+"All Conditions",3,8,7560
+"All Conditions",3,9,17220
+"All Conditions",3,10,3780

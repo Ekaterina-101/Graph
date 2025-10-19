@@ -1,0 +1,35 @@
+Type,Diameter,Edges,Count
+"Connected",1,10,1
+"Connected",2,4,5
+"Connected",2,5,42
+"Connected",2,6,145
+"Connected",2,7,120
+"Connected",2,8,45
+"Connected",2,9,10
+"Connected",3,4,60
+"Connected",3,5,180
+"Connected",3,6,60
+"Connected",4,4,60
+"No AP/B & connected",1,10,1
+"No AP/B & connected",2,5,12
+"No AP/B & connected",2,6,70
+"No AP/B & connected",2,7,100
+"No AP/B & connected",2,8,45
+"No AP/B & connected",2,9,10
+"Degree <= 4 & connected",1,10,1
+"Degree <= 4 & connected",2,4,5
+"Degree <= 4 & connected",2,5,42
+"Degree <= 4 & connected",2,6,145
+"Degree <= 4 & connected",2,7,120
+"Degree <= 4 & connected",2,8,45
+"Degree <= 4 & connected",2,9,10
+"Degree <= 4 & connected",3,4,60
+"Degree <= 4 & connected",3,5,180
+"Degree <= 4 & connected",3,6,60
+"Degree <= 4 & connected",4,4,60
+"All Conditions",1,10,1
+"All Conditions",2,5,12
+"All Conditions",2,6,70
+"All Conditions",2,7,100
+"All Conditions",2,8,45
+"All Conditions",2,9,10

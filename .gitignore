@@ -1,0 +1,41 @@
+build/
+cmake-build-*/
+
+*.o
+*.obj
+
+new
+generator
+
+*.ii
+*.s
+
+cmake-build-*/CMakeFiles/*.dir/
+
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+
+.vscode/
+.idea/
+
+Testing/
+*.log
+
+CTestTestfile.cmake
+install_manifest.txt
+
+*~
+.#*
+*.swp
+*.swo
+
+# ../data/
+
+*.bin
+*.exe
+*.dll
+*.so
+
+.DS_Store  # macOS
+Thumbs.db  # Windows

@@ -36,7 +36,7 @@ void RandomGenerator::run_trials() {
             if (!is_graph_connected(graph)) continue;
 
             bool no_apb = !has_articulation_points(graph) && !has_bridges(graph);
-            bool degree_ok = all_vertices_degree_less(graph, m_degree); // Убедитесь, что используете правильное имя функции
+            bool degree_ok = all_vertices_degree_less(graph, m_max_degree);
             int diam = diameter(graph);
             stats_connected.update(diam);
 

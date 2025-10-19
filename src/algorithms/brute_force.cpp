@@ -27,7 +27,7 @@ void BruteForceGenerator::generate_graphs() {
     print_diameter_statistics({
         {"Connected", stats_connected},
         {"No AP/B", stats_no_apb},
-        {"Degree <= " + std::to_string(m_degree), stats_degree},
+        {std::to_string(m_min_degree) + " <= degree <= " + std::to_string(m_max_degree), stats_degree},
         {"All Conditions", stats_all_conditions}
     });
 

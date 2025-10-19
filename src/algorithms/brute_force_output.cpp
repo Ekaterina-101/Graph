@@ -73,7 +73,7 @@ void BruteForceGenerator::save_detailed_statistics_to_csv() {
     std::ostringstream filename_stream;
     filename_stream << "../data/results/v" 
                     << num_vertices(m_graph) 
-                    << "-d" << m_degree  
+                    << "-d" << m_max_degree  
                     << "-detailedStats"<< ".csv";
     
     std::ofstream csv_file(filename_stream.str());
@@ -87,7 +87,7 @@ void BruteForceGenerator::save_detailed_statistics_to_csv() {
     const std::vector<std::pair<std::string, DiameterStats>> stats_list = {
         {"Connected", stats_connected},
         {"No AP/B & connected", stats_no_apb},
-        {"Degree <= " + std::to_string(m_degree) + " & connected", stats_degree},
+        {"Degree <= " + std::to_string(m_max_degree) + " & connected", stats_degree},
         {"All Conditions", stats_all_conditions}
     };
 
@@ -109,7 +109,7 @@ void BruteForceGenerator::output_results_to_file() {
     std::ostringstream filename_stream;
     filename_stream << "../data/results/v" 
                     << num_vertices(m_graph) 
-                    << "-d" << m_degree  
+                    << "-d" << m_max_degree  
                     << "-resultsFormula"<< ".csv";
     
     std::ofstream output(filename_stream.str());
@@ -123,7 +123,7 @@ void BruteForceGenerator::output_results_to_file() {
 
     const int E = stats_all_conditions.edge_counts.size() - 1;
     
-    output << "p,Connected,No AP/B & connected,Degree <= " << m_degree << " & connected,All Conditions\n";
+    output << "p,Connected,No AP/B & connected,Degree <= " << m_max_degree << " & connected,All Conditions\n";
 
     for (double p = 0.0; p <= 1.0 + 1e-8; p += 0.01) {
         double sum_connected = 0;

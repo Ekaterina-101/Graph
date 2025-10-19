@@ -71,7 +71,8 @@ void BruteForceGenerator::update_statistics(
     stats_connected.update(current_diameter, edges);
 
     bool no_apb = !has_articulation_points(graph) && !has_bridges(graph);
-    bool degree_ok = all_vertices_degree_less(graph, m_degree);
+    bool degree_ok = all_vertices_degree_less(graph, m_max_degree) &&
+        all_vertices_degree_greater(graph, m_min_degree);
 
     if (no_apb) {
         stats_no_apb.update(current_diameter, edges);
@@ -93,7 +94,7 @@ void BruteForceGenerator::load_precomputed_data() {
     std::ostringstream edge_filename_stream;
     edge_filename_stream << base_path
                         << "v" << V
-                        << "-d" << m_degree
+                        << "-d" << m_max_degree
                         << "-allConditions-byEdges.txt";
 
     std::ifstream edge_file(edge_filename_stream.str());
@@ -112,7 +113,7 @@ void BruteForceGenerator::load_precomputed_data() {
     std::ostringstream detail_filename_stream;
     detail_filename_stream << base_path
                           << "v" << V
-                          << "-d" << m_degree
+                          << "-d" << m_max_degree
                           << "-detailed.txt";
 
     std::ifstream detail_file(detail_filename_stream.str());
@@ -149,7 +150,7 @@ void BruteForceGenerator::load_graphs_for_specific_cases() {
     std::ostringstream filename_stream;
     filename_stream << base_path
                     << "v" << V
-                    << "-d" << m_degree
+                    << "-d" << m_max_degree
                     << "-allConditions-byEdges.txt";
 
     const std::string filename = filename_stream.str();

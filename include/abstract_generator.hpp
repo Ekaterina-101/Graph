@@ -11,7 +11,9 @@ protected:
     DiameterStats stats_all_conditions;
     
 public:
-    std::size_t m_degree;
+    std::size_t m_max_degree;
+    std::size_t m_min_degree;
+    
     explicit AbstractGenerator(Graph graph) : m_graph(std::move(graph)) {}
     virtual void generate_graphs() = 0;
 };

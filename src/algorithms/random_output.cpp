@@ -20,7 +20,7 @@ void RandomGenerator::output_results_to_file(const std::string& filename) const 
                << "p = " << res.probability
                << " | P(connected) = " << res.p_connected
                << " | P(no AP/B & connected) = " << res.p_no_apb
-               << " | P(degree <= " << m_degree << " & connected) = " << res.p_degree
+               << " | P(degree <= " << m_max_degree << " & connected) = " << res.p_degree
                << " | P(all conditions) = " << res.p_both
                << std::endl;
     }

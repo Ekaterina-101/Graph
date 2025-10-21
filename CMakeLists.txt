@@ -21,6 +21,7 @@ add_library(graph_properties
     src/algorithms/random_core.cpp
     src/algorithms/random_generator.cpp
     src/algorithms/random_output.cpp
+    src/algorithms/process_subgraphs.cpp
 )
 
 target_include_directories(graph_properties

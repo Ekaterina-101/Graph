@@ -41,6 +41,11 @@ bool BruteForceGenerator::next_combination(std::vector<int>& comb, int n) {
 void BruteForceGenerator::process_graphs_by_edges(
     const std::vector<std::pair<int, int>>& all_edges) {
 
+    stats_connected.clear();
+    stats_no_apb.clear();
+    stats_degree.clear();
+    stats_all_conditions.clear();
+
     const int E = all_edges.size();
     for (int e = 0; e <= E; ++e) {
         if (e == 0) continue;
@@ -72,7 +77,7 @@ void BruteForceGenerator::update_statistics(
 
     bool no_apb = !has_articulation_points(graph) && !has_bridges(graph);
     bool degree_ok = all_vertices_degree_less(graph, m_max_degree) &&
-        all_vertices_degree_greater(graph, m_min_degree);
+                     all_vertices_degree_greater(graph, m_min_degree);
 
     if (no_apb) {
         stats_no_apb.update(current_diameter, edges);
@@ -173,11 +178,13 @@ double BruteForceGenerator::get_prob() {
 
     const int E = all_edges.size();
 
-    if (num_vertices(m_graph) < 8) {
-        process_graphs_by_edges(all_edges);
-    } else {
-        load_graphs_for_specific_cases();
-    }
+    //if (num_vertices(m_graph) < 8) {
+    //    process_graphs_by_edges(all_edges);
+    //} else {
+    //    load_graphs_for_specific_cases();
+    //}
+
+    process_graphs_by_edges(all_edges);
 
     double max_sum = -1;
     double max_p;

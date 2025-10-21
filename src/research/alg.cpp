@@ -8,6 +8,7 @@
 #include "graph_diam.hpp"
 #include "is_graph_connected.hpp"
 #include "art_points_and_bridges.hpp"
+#include "process_subgraphs.hpp"
 
 using namespace boost;
 
@@ -65,10 +66,11 @@ std::vector<std::vector<int>> generate_single_graph(int n, double p, std::mt1993
 
 void generate_graphs_with_steps(int n) {
     const int NUMBER_OF_TRIALS = 100;
-    const double PROB_MIN = 0.0;
+    const double PROB_MIN = 0.3;
     const double PROB_MAX = 1.0;
     const double PROB_STEP = 0.1;
-    const int degree = 3; 
+    const int max_degree = 3;
+    const int min_degree = 2; 
     
     std::ofstream output("../results_regular_graph_8v02.txt");
     std::ofstream gr("../gr_8v02.txt");
@@ -78,7 +80,9 @@ void generate_graphs_with_steps(int n) {
         return;
     }
     
-    output << "probability,connected,no_articulation_points,degree_limited,all_conditions,has_valid_subgraph,avr_blue_conn,avr_blue_apb,avr_blue_deg,avr_blue_all\n";
+    output << "probability,connected,no_articulation_points,degree_limited,all_conditions,has_valid_subgraph,"
+           << "avr_blue_conn,avr_blue_apb,avr_blue_deg,avr_blue_all,"
+           << "d_visAvg,d_avgMin,d_avgAvg\n";
     std::cout << "Vertices: " << n << std::endl;
     
     std::random_device rd;
@@ -86,39 +90,46 @@ void generate_graphs_with_steps(int n) {
     //bool flag = false;
     //bool red_printed = false;
 
-    for (double p = PROB_MIN; p <= PROB_MAX + 1e-8; p += PROB_STEP) {
-        DiameterStats stats_connected_red;
-        DiameterStats stats_no_apb_red;
-        DiameterStats stats_degree_red;
-        DiameterStats stats_red_all;
-        DiameterStats stats_blue_conn, stats_blue_no_apb, stats_blue_deg, stats_blue_all;
+    for (double p = PROB_MIN; p <= PROB_MAX + EPS; p += PROB_STEP) {
+        DiameterStats stats_connected_red, stats_no_apb_red, 
+                      stats_degree_red, stats_red_all;
+        DiameterStats stats_blue_conn, stats_blue_no_apb, 
+                      stats_blue_deg, stats_blue_all;
         //int count_with_valid_subgraph = 0;
         //int total_subgraphs = 0;
         //int total_valid_subgraphs = 0;
         //double sum_ratios = 0.0;
         int count_has_blue_subgraph = 0;
 
+        //if (std::abs(p - 0.3) < EPS) {
+        //    break;
+        //}
 
-        if (std::abs(p - 0.3) < EPS) {
-            break;
-        }
+        //std::vector<std::vector<int>> weights_per_row(n, std::vector<int>(0)); 
+        //std::vector<double> all_avg_weights;
 
-        std::vector<std::vector<int>> weights_per_row(n, std::vector<int>(0)); 
-        std::vector<double> all_avg_weights;
+        double sum_d_vis = 0.0;
+        int count_d_vis = 0;
+        double sum_d_avgMin = 0.0;
+        double sum_d_avgAvg = 0.0;
+        int count_d_avg = 0;
 
         for (int trial = 0; trial < NUMBER_OF_TRIALS; ++trial) {
             auto adj_matrix = generate_single_graph(n, p, gen);
+            
             Graph g = matrix_to_boost_graph(adj_matrix);
+            int diam = diameter(g);
 
             if (is_graph_connected(g)) {
-                if (std::abs(p - 0.2) < EPS) {
-                    gr << "red conn\n";
-                    print_graph_properties(g, gr);
-                }
+                //if (std::abs(p - 0.2) < EPS) {
+                //    gr << "red conn\n";
+                //    print_graph_properties(g, gr);
+                //}
                 
                 bool no_apb = !has_articulation_points(g) && !has_bridges(g);
-                bool degree_ok = all_vertices_degree_less(g, degree);
-                int diam = diameter(g);
+                bool degree_ok = all_vertices_degree_less(g, max_degree) &&
+                                 all_vertices_degree_greater(g, min_degree);
+                
 
                 stats_connected_red.update(diam);
                 if (no_apb) { stats_no_apb_red.update(diam); }
@@ -126,10 +137,10 @@ void generate_graphs_with_steps(int n) {
                 if (no_apb && degree_ok) { stats_red_all.update(diam); }
             }
             else {
-                if (std::abs(p - 0.2) < EPS) {
-                    gr << "red not conn\n";
-                    print_graph_properties(g, gr);
-                }
+                //if (std::abs(p - 0.2) < EPS) {
+                //    gr << "red not conn\n";
+                //    print_graph_properties(g, gr);
+                //}
             }
 
             //if (p == 0.4 /*&& !red_printed*/) {
@@ -156,58 +167,25 @@ void generate_graphs_with_steps(int n) {
             //avg_weight /= n;
             //all_avg_weights.push_back(avg_weight);
 
-            std::vector<Edge> edges_list;
-            for (auto e : make_iterator_range(edges(g))) {
-                edges_list.push_back(e);
-            }
-            size_t num_edges = edges_list.size();
-                
-            //bool found_valid_subgraph = false;
-            //DiameterStats stats_all_blue;
-            //int total_count = 0;
-            bool has_blue_subgraph = false;
+            sum_d_vis += diam;
+            count_d_vis++;
 
-            for (size_t e_mask = 0; e_mask < (1ULL << num_edges) /* && !found_valid_subgraph */; ++e_mask) {
-                Graph subgraph(num_vertices(g));
+            process_subgraphs(g,
+                              stats_blue_conn,
+                              stats_blue_no_apb,
+                              stats_blue_deg,
+                              stats_blue_all,
+                              sum_d_avgMin,
+                              sum_d_avgAvg,
+                              count_d_avg,
+                              count_has_blue_subgraph,
+                              max_degree,
+                              min_degree);
 
-                for (size_t i = 0; i < num_edges; ++i) {
-                    if (e_mask & (1ULL << i)) {
-                        Edge e = edges_list[i];
-                        Vertex src = source(e, g);
-                        Vertex tgt = target(e, g);
-                        add_edge(src, tgt, subgraph);
-                    }
-                }
-                
-                //total_count++;
-
-                if (!is_graph_connected(subgraph)) continue;
-                int diam = diameter(subgraph);
-                stats_blue_conn.update(diam);
-                bool no_apb = !has_articulation_points(subgraph) && !has_bridges(subgraph);
-                bool degree_ok = all_vertices_degree_less(subgraph, degree);
-
-                if (no_apb) { stats_blue_no_apb.update(diam); }
-                if (degree_ok) { stats_blue_deg.update(diam); }
-
-
-                if (no_apb && degree_ok) {
-                    if (std::abs(p - 0.2) < EPS /*&& red_printed*/) {
-                        gr << "blue\n";
-                        print_graph_properties(subgraph, gr);
-                    }
-                    //count_with_valid_subgraph++;
-                    //found_valid_subgraph = true;
-                    stats_blue_all.update(diam);
-                    has_blue_subgraph = true;
-                    //break; 
-                }
-            }
-            
             //double ratio = (total_count > 0) 
             //    ? static_cast<double>(stats_all_blue.count) / total_count : 0.0;
             //sum_ratios += ratio;
-            if (has_blue_subgraph) { count_has_blue_subgraph++; }
+            //if (has_blue_subgraph) { count_has_blue_subgraph++; }
         }
 
         std::cout << p << " " << stats_connected_red.count << "\n";
@@ -229,6 +207,10 @@ void generate_graphs_with_steps(int n) {
 
         //std::cout << avr_blue_all << "\n";
 
+        double d_visAvg = (count_d_vis > 0) ? sum_d_vis / count_d_vis : 0.0;
+        double d_avgMin = (count_d_avg > 0) ? sum_d_avgMin / count_d_avg : 0.0;
+        double d_avgAvg = (count_d_avg > 0) ? sum_d_avgAvg / count_d_avg : 0.0;
+
         output << std::fixed << std::setprecision(2) << p
                << "," << std::scientific << p_connected_red
                << "," << p_no_apb_red 
@@ -238,7 +220,11 @@ void generate_graphs_with_steps(int n) {
                << "," << avr_blue_conn
                << "," << avr_blue_apb
                << "," << avr_blue_deg
-               << "," << avr_blue_all << "\n";
+               << "," << avr_blue_all
+               << "," << d_visAvg
+               << "," << d_avgMin
+               << "," << d_avgAvg
+               << "\n";
 
         // Выводим в консоль вес каждой строки и средний вес
         //std::cout << "Probability p = " << std::fixed << std::setprecision(2) << p << ":\n";
@@ -263,7 +249,7 @@ void generate_graphs_with_steps(int n) {
 }
 
 int main() {
-    int n = 8; 
+    int n = 6; 
     generate_graphs_with_steps(n);
     
     return 0;

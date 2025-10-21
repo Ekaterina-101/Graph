@@ -45,6 +45,47 @@ struct DiameterStats {
         }
     }
 
+    void merge(const DiameterStats& other) {
+        if (other.count == 0) return; // Nothing to merge
+        
+        // Update min and count_min
+        if (other.min < min) {
+            min = other.min;
+            count_min = other.count_min;
+        } else if (other.min == min) {
+            count_min += other.count_min;
+        }
+    
+        // Update max and count_max
+        if (other.max > max) {
+            max = other.max;
+            count_max = other.count_max;
+        } else if (other.max == max) {
+            count_max += other.count_max;
+        }
+    
+        // Update sum and count
+        sum += other.sum;
+        count += other.count;
+    
+        // Merge diameter_counts map
+        for (const auto& [diam, cnt] : other.diameter_counts) {
+            diameter_counts[diam] += cnt;
+        }
+    
+        // Merge edge_counts map
+        for (const auto& [edge_val, cnt] : other.edge_counts) {
+            edge_counts[edge_val] += cnt;
+        }
+    
+        // Merge diameter_edge_counts nested map
+        for (const auto& [diam, edge_map] : other.diameter_edge_counts) {
+            for (const auto& [edge_val, cnt] : edge_map) {
+                diameter_edge_counts[diam][edge_val] += cnt;
+            }
+        }
+    }
+
     double average() const { return count > 0 ? static_cast<double>(sum) / count : 0.0; }
 
     void clear() {

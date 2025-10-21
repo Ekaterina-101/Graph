@@ -41,16 +41,20 @@ int diameter(const Graph& g) {
 
 bool all_vertices_degree_less(const Graph& g, std::size_t degree) {
     for (auto [v_it, v_end] = vertices(g); v_it != v_end; ++v_it) {
-        if (out_degree(*v_it, g) > degree)
+        if (out_degree(*v_it, g) > degree) {
             return false;
+        }
     }
+
     return true;
 }
 
 bool all_vertices_degree_greater(const Graph& g, std::size_t degree) {
     for (auto [v_it, v_end] = vertices(g); v_it != v_end; ++v_it) {
-        if (out_degree(*v_it, g) < degree)
+        if (out_degree(*v_it, g) < degree) {
             return false;
+        }
     }
+
     return true;
 }

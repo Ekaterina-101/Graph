@@ -47,3 +47,5 @@ target_link_libraries(new PRIVATE graph_properties graph_headers)
 add_executable(generator src/research/united.cpp)
 target_link_libraries(generator PRIVATE graph_properties graph_headers Boost::program_options)
 
+add_executable(test src/research/test.cpp)
+target_link_libraries(test PRIVATE graph_properties graph_headers)

@@ -14,7 +14,7 @@
 #include "art_points_and_bridges.hpp"
 #include "process_subgraphs.hpp"
 
-using namespace boost;
+using namespace boost;  
 
 // Структура для хранения результатов одного потока
 struct SubgraphResults {
@@ -46,13 +46,14 @@ void process_subgraph_range(const Graph& original_graph,
                             const int max_degree,
                             const int min_degree,
                             SubgraphResults& results) {
+
     std::vector<Edge> edges_list;
+
     for (auto e : make_iterator_range(edges(original_graph))) {
         edges_list.push_back(e);
     }
-    size_t num_edges = edges_list.size();
 
-    std::vector<int> local_valid_diameters;
+    size_t num_edges = edges_list.size();
 
     for (size_t e_mask = start_mask; e_mask < end_mask; ++e_mask) {
         Graph subgraph(num_vertices(original_graph));
@@ -83,6 +84,7 @@ void process_subgraph_range(const Graph& original_graph,
             std::lock_guard<std::mutex> lock(stats_mutex);
             results.stats_no_apb.update(sub_diam);
         }
+
         if (degree_ok) {
             std::lock_guard<std::mutex> lock(stats_mutex);
             results.stats_deg.update(sub_diam);
@@ -90,18 +92,11 @@ void process_subgraph_range(const Graph& original_graph,
 
         if (no_apb && degree_ok) {
             std::lock_guard<std::mutex> lock(stats_mutex);
+
             results.stats_all.update(sub_diam);
             results.has_valid_subgraph = true;
-
-            local_valid_diameters.push_back(sub_diam);
+            results.valid_diameters.push_back(sub_diam);
         }
-    }
-
-    {
-        std::lock_guard<std::mutex> lock(valid_diameters_mutex);
-        results.valid_diameters.insert(results.valid_diameters.end(),
-                                       local_valid_diameters.begin(),
-                                       local_valid_diameters.end());
     }
 }
 
@@ -126,18 +121,13 @@ void process_subgraphs(const Graph& original_graph,
     size_t total_masks = (1ULL << num_edges);
 
     if (num_threads <= 1 || total_masks < 2) {
-        // Если нет смысла распараллеливать, используем однопоточную версию
         SubgraphResults single_results;
         process_subgraph_range(original_graph, 0, total_masks, max_degree, min_degree, single_results);
 
-        // Объединяем результаты
-        {
-            std::lock_guard<std::mutex> lock(stats_mutex);
-            stats_blue_conn.merge(single_results.stats_conn);
-            stats_blue_no_apb.merge(single_results.stats_no_apb);
-            stats_blue_deg.merge(single_results.stats_deg);
-            stats_blue_all.merge(single_results.stats_all);
-        }
+        stats_blue_conn.merge(single_results.stats_conn);
+        stats_blue_no_apb.merge(single_results.stats_no_apb);
+        stats_blue_deg.merge(single_results.stats_deg);
+        stats_blue_all.merge(single_results.stats_all);
 
         if (!single_results.valid_diameters.empty()) {
             int min_diam = *std::min_element(single_results.valid_diameters.begin(), single_results.valid_diameters.end());
@@ -153,7 +143,6 @@ void process_subgraphs(const Graph& original_graph,
         return;
     }
 
-    // Определяем количество задач (одна на каждый поток)
     std::vector<std::thread> threads;
     std::vector<SubgraphResults> thread_results(num_threads);
 
@@ -167,8 +156,6 @@ void process_subgraphs(const Graph& original_graph,
             end_mask++; // Распределяем остаток
         }
 
-        thread_results[t].reset();
-
         threads.emplace_back(process_subgraph_range,
                              std::cref(original_graph),
                              start_mask,
@@ -180,30 +167,22 @@ void process_subgraphs(const Graph& original_graph,
         start_mask = end_mask;
     }
 
-    // Ждем завершения всех потоков
     for (auto& th : threads) {
         th.join();
     }
 
-    // Объединяем результаты из всех потоков
     std::vector<int> combined_valid_diameters;
     bool any_has_valid = false;
 
     for (const auto& res : thread_results) {
-        {
-            std::lock_guard<std::mutex> lock(stats_mutex);
-            stats_blue_conn.merge(res.stats_conn);
-            stats_blue_no_apb.merge(res.stats_no_apb);
-            stats_blue_deg.merge(res.stats_deg);
-            stats_blue_all.merge(res.stats_all);
-        }
+        stats_blue_conn.merge(res.stats_conn);
+        stats_blue_no_apb.merge(res.stats_no_apb);
+        stats_blue_deg.merge(res.stats_deg);
+        stats_blue_all.merge(res.stats_all);
 
-        {
-            std::lock_guard<std::mutex> lock(valid_diameters_mutex);
-            combined_valid_diameters.insert(combined_valid_diameters.end(),
-                                            res.valid_diameters.begin(),
-                                            res.valid_diameters.end());
-        }
+        combined_valid_diameters.insert(combined_valid_diameters.end(),
+                                        res.valid_diameters.begin(),
+                                        res.valid_diameters.end());
 
         if (res.has_valid_subgraph) {
             any_has_valid = true;
@@ -215,7 +194,7 @@ void process_subgraphs(const Graph& original_graph,
         sum_d_avgMin += min_diam;
         double avg_diam = std::accumulate(combined_valid_diameters.begin(), combined_valid_diameters.end(), 0.0) / combined_valid_diameters.size();
         sum_d_avgAvg += avg_diam;
-        count_d_avg++; // Увеличиваем счетчик, так как у этого графа есть валидные подграфы
+        count_d_avg++;
     }
 
     if (any_has_valid) {

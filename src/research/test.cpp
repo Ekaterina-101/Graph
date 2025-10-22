@@ -35,12 +35,12 @@ int main() {
                       stats_blue_no_apb, 
                       stats_blue_deg, 
                       stats_blue_all,
-                      sum_d_avgMin, 
-                      sum_d_avgAvg, 
-                      count_d_avg, 
+                      sum_d_avgMin,
+                      sum_d_avgAvg,
+                      count_d_avg,
                       count_has_blue_subgraph,
-                      max_degree, 
-                      min_degree, 
+                      max_degree,
+                      min_degree,
                       num_threads);
 
     // Выводим результаты

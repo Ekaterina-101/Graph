@@ -180,15 +180,15 @@ void generate_graphs_with_steps(int n) {
                               count_d_avg,
                               count_has_blue_subgraph,
                               max_degree,
-                              min_degree, 1);
+                              min_degree);
 
             //double ratio = (total_count > 0) 
             //    ? static_cast<double>(stats_all_blue.count) / total_count : 0.0;
             //sum_ratios += ratio;
             //if (has_blue_subgraph) { count_has_blue_subgraph++; }
         }
-
-        std::cout << p << " " << stats_connected_red.count << "\n";
+        std::cout << p << " " << sum_d_avgMin << "\n";
+        //std::cout << p << " " << stats_connected_red.count << "\n";
 
         double p_connected_red = static_cast<double>(stats_connected_red.count) / NUMBER_OF_TRIALS;
         double p_no_apb_red = static_cast<double>(stats_no_apb_red.count) / stats_connected_red.count;

@@ -28,10 +28,10 @@ struct SubgraphResults {
     SubgraphResults() = default;
 
     void reset() {
-        stats_conn = DiameterStats();
-        stats_no_apb = DiameterStats();
-        stats_deg = DiameterStats();
-        stats_all = DiameterStats();
+        stats_conn.clear();
+        stats_no_apb.clear();
+        stats_deg.clear();
+        stats_all.clear();
         valid_diameters.clear();
         has_valid_subgraph = false;
     }
@@ -52,7 +52,6 @@ void process_subgraph_range(const Graph& original_graph,
     }
     size_t num_edges = edges_list.size();
 
-    // Локальные переменные для сбора результатов
     std::vector<int> local_valid_diameters;
 
     for (size_t e_mask = start_mask; e_mask < end_mask; ++e_mask) {
@@ -71,7 +70,6 @@ void process_subgraph_range(const Graph& original_graph,
 
         int sub_diam = diameter(subgraph);
 
-        // Защищаем доступ к общим результатам
         {
             std::lock_guard<std::mutex> lock(stats_mutex);
             results.stats_conn.update(sub_diam);
@@ -95,12 +93,10 @@ void process_subgraph_range(const Graph& original_graph,
             results.stats_all.update(sub_diam);
             results.has_valid_subgraph = true;
 
-            // Собираем результаты в локальный буфер
             local_valid_diameters.push_back(sub_diam);
         }
     }
 
-    // После завершения работы с потоком, объединяем локальные результаты
     {
         std::lock_guard<std::mutex> lock(valid_diameters_mutex);
         results.valid_diameters.insert(results.valid_diameters.end(),

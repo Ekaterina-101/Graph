@@ -180,7 +180,7 @@ void generate_graphs_with_steps(int n) {
                               count_d_avg,
                               count_has_blue_subgraph,
                               max_degree,
-                              min_degree);
+                              min_degree, 1);
 
             //double ratio = (total_count > 0) 
             //    ? static_cast<double>(stats_all_blue.count) / total_count : 0.0;

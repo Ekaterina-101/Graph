@@ -49,3 +49,6 @@ target_link_libraries(generator PRIVATE graph_properties graph_headers Boost::pr
 
 add_executable(test src/research/test.cpp)
 target_link_libraries(test PRIVATE graph_properties graph_headers)
+
+add_executable(diam_in_cycle src/research/diam_add_edge_in_cycle.cpp)
+target_link_libraries(diam_in_cycle PRIVATE graph_properties graph_headers)
